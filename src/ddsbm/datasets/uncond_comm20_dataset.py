@@ -137,8 +137,8 @@ class Comm20Dataset(InMemoryDataset):
         self.compute_dataset_infos = compute_dataset_infos
         self.prior_sample = prior_sample
         if not self.compute_dataset_infos:
-            node_types = torch.load(root / "node_types.pt")
-            edge_types = torch.load(root / "edge_types.pt")
+            node_types = torch.load(root / "node_types.pt", weights_only=False)
+            edge_types = torch.load(root / "edge_types.pt", weights_only=False)
             Xdim = len(node_types)
             Edim = len(edge_types)
             ydim = 12
@@ -153,7 +153,7 @@ class Comm20Dataset(InMemoryDataset):
                 y_limit = torch.ones(ydim) / ydim
                 self.limit_dist = utils.PlaceHolder(X=x_limit, E=e_limit, y=y_limit)
 
-                self.n_nodes = torch.load(root / "n_counts.pt")
+                self.n_nodes = torch.load(root / "n_counts.pt", weights_only=False)
                 self.node_dist = distributions.DistributionNodes(self.n_nodes)
 
         if self.stage == "train":
@@ -165,7 +165,7 @@ class Comm20Dataset(InMemoryDataset):
 
         super().__init__(root, transform, pre_transform, pre_filter)
 
-        self.data, self.slices = torch.load(self.processed_paths[self.file_idx])
+        self.data, self.slices = torch.load(self.processed_paths[self.file_idx], weights_only=False)
 
     @property
     def raw_file_names(self):
@@ -192,7 +192,7 @@ class Comm20Dataset(InMemoryDataset):
         print("MAX NUM NODES", max_num_nodes)
         print(f"Current Dataset Directory : {self.split_paths[self.file_idx]}")
 
-        target_data = torch.load(self.split_paths[self.file_idx])
+        target_data = torch.load(self.split_paths[self.file_idx], weights_only=False)
 
         data_list = []
         for i, adj in enumerate(target_data):
@@ -392,9 +392,9 @@ class Comm20infos(AbstractDatasetInfos):
         elif cfg.dataset.prior_sample:
             assert False, "sample done"
 
-        self.n_nodes = torch.load(root_path / "n_counts.pt")
-        self.node_types = torch.load(root_path / "node_types.pt")
-        self.edge_types = torch.load(root_path / "edge_types.pt")
+        self.n_nodes = torch.load(root_path / "n_counts.pt", weights_only=False)
+        self.node_types = torch.load(root_path / "node_types.pt", weights_only=False)
+        self.edge_types = torch.load(root_path / "edge_types.pt", weights_only=False)
 
         self.complete_infos(n_nodes=self.n_nodes, node_types=self.node_types)
 

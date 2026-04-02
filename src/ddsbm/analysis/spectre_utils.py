@@ -697,7 +697,7 @@ def is_grid_graph(G):
     """
     all_grid_file = f"data/all_grids.pt"
     if os.path.isfile(all_grid_file):
-        all_grids = torch.load(all_grid_file)
+        all_grids = torch.load(all_grid_file, weights_only=False)
     else:
         all_grids = {}
         for i in range(2, 20):

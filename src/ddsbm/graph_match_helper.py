@@ -74,16 +74,16 @@ class GraphMatchModule(pl.LightningModule):
 
         if cfg.model.transition == "uniform":
             # NOTE: Number of classes (including X)
-            Xdim = len(torch.load(osp.join(dataset_dir, "node_types.pt")))
-            Edim = len(torch.load(osp.join(dataset_dir, "edge_types.pt")))
+            Xdim = len(torch.load(osp.join(dataset_dir, "node_types.pt")), weights_only=False)
+            Edim = len(torch.load(osp.join(dataset_dir, "edge_types.pt")), weights_only=False)
             self.transition_model = DiscreteUniformTransition(
                 x_classes=Xdim, e_classes=Edim, y_classes=1
             )
         elif cfg.model.transition == "marginal":
-            node_types = torch.load(osp.join(dataset_dir, "node_types.pt"))
+            node_types = torch.load(osp.join(dataset_dir, "node_types.pt"), weights_only=False)
             x_marginals = node_types / torch.sum(node_types)
 
-            edge_types = torch.load(osp.join(dataset_dir, "edge_types.pt"))
+            edge_types = torch.load(osp.join(dataset_dir, "edge_types.pt"), weights_only=False)
             e_marginals = edge_types / torch.sum(edge_types)
             # y_marginals = torch.ones(1)
 
@@ -275,7 +275,7 @@ class GraphMatchModule(pl.LightningModule):
             self.print("Debug] perm_pt_path")
             assert perm_pt_path.exists(), f"perm_pt_path {perm_pt_path} does not exist"
 
-            prev_perm_dict = torch.load(perm_pt_path)
+            prev_perm_dict = torch.load(perm_pt_path, weights_only=False)
             perm = []
             for key in data.idx:
                 _perm = prev_perm_dict[key.item()]
@@ -502,19 +502,19 @@ def post_process(cfg, dataset_dir, perm_dir, max_num_nodes: int, train_or_test="
     if cfg.graph_match.data_path is None:
         # 1. Load pyg data
         # NOTE: not a data with slices, dictionary of single PairData
-        pyg_data_dict = torch.load(dataset_dir / f"{train_or_test}_data.pt")
+        pyg_data_dict = torch.load(dataset_dir / f"{train_or_test}_data.pt", weights_only=False)
 
         # 2. Load perm data
         perm_pt_path = perm_dir / f"processed/{train_or_test}_match_perm.pt"
         assert perm_pt_path.exists(), f"perm_pt_path {perm_pt_path} does not exist"
-        perm_dict = torch.load(perm_pt_path)
+        perm_dict = torch.load(perm_pt_path, weights_only=False)
     else:
         # 1. Load pyg data
         # NOTE: not a data with slices, dictionary of single PairData
         file_path = pathlib.Path(cfg.graph_match.data_path)
         file_list = list(file_path.glob(f"generated_joint_{train_or_test}*.pt"))
         assert len(file_list) == 1, f"file_list {file_list} must have only one file"
-        pyg_data_dict = torch.load(file_list[0])
+        pyg_data_dict = torch.load(file_list[0], weights_only=False)
 
         # 2. Load perm data
         assert (direction := cfg.train.get("bridge_direction", None)) is not None
@@ -537,7 +537,7 @@ def post_process(cfg, dataset_dir, perm_dir, max_num_nodes: int, train_or_test="
         )
         assert perm_pt_path.exists(), f"perm_pt_path {perm_pt_path} does not exist"
 
-        perm_dict = torch.load(perm_pt_path)
+        perm_dict = torch.load(perm_pt_path, weights_only=False)
 
     print(f"Debug] len(pyg_dict): {len(pyg_data_dict)}")
     print(f"Debug] len(perm_dict): {len(perm_dict)}")

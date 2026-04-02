@@ -433,7 +433,7 @@ def _collate(data_list):
 
 
 def merge(data_path: Path, save_path: Path):
-    pyg_data_dict = torch.load(data_path)
+    pyg_data_dict = torch.load(data_path, weights_only=False)
 
     data_list = []
     for key in pyg_data_dict:

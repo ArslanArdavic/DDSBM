@@ -112,7 +112,7 @@ class JointMolDataset(InMemoryDataset):
 
         super().__init__(root, transform, pre_transform, pre_filter)
 
-        self.data, self.slices = torch.load(self.processed_paths[self.file_idx])
+        self.data, self.slices = torch.load(self.processed_paths[self.file_idx], weights_only=False)
 
     @property
     def raw_file_names(self):
@@ -350,10 +350,10 @@ class JointMolecularinfos(AbstractDatasetInfos):
             self.valency_distribution = valencies
             assert False, "statistics done"
 
-        self.n_nodes = torch.load(root_path / "n_counts.pt")
-        self.node_types = torch.load(root_path / "node_types.pt")
-        self.edge_types = torch.load(root_path / "edge_types.pt")
-        self.valency_distribution = torch.load(root_path / "valencies.pt")
+        self.n_nodes = torch.load(root_path / "n_counts.pt", weights_only=False)
+        self.node_types = torch.load(root_path / "node_types.pt", weights_only=False)
+        self.edge_types = torch.load(root_path / "edge_types.pt", weights_only=False)
+        self.valency_distribution = torch.load(root_path / "valencies.pt", weights_only=False)
 
         self.complete_infos(n_nodes=self.n_nodes, node_types=self.node_types)
 

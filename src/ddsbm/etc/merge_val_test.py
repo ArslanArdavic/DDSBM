@@ -11,12 +11,12 @@ from ddsbm.utils import _collate
 def merge_original_valtest_to_processed_test(data_path: Path, regex: str):
     for dir in data_path.glob(regex):
         valid_data_path = dir / "811_valid_data.pt"
-        valid_data = torch.load(valid_data_path)
+        valid_data = torch.load(valid_data_path, weights_only=False)
         for key, val in valid_data.items():
             assert key == val.idx
 
         test_data_path = dir / "811_test_data.pt"
-        test_data = torch.load(test_data_path)
+        test_data = torch.load(test_data_path, weights_only=False)
         for key, val in test_data.items():
             assert key == val.idx
 
@@ -66,11 +66,11 @@ def merge_valtest(data_path: Path, regex: str):
         new_test_df.to_csv(test_csv_path, index_label="")
 
         valid_data_path = dir / "valid_data.pt"
-        valid_data = torch.load(valid_data_path)
+        valid_data = torch.load(valid_data_path, weights_only=False)
         for key, val in valid_data.items():
             assert key == val.idx
         test_data_path = dir / "test_data.pt"
-        test_data = torch.load(test_data_path)
+        test_data = torch.load(test_data_path, weights_only=False)
         for key, val in test_data.items():
             assert key == val.idx
 
@@ -123,12 +123,12 @@ def copy_data_and_merge_valtest(data_path: Path, regex: str):
         new_test_df.to_csv(test_csv_path, index_label="")
 
         valid_data_path = dir / "811_valid_data.pt"
-        valid_data = torch.load(valid_data_path)
+        valid_data = torch.load(valid_data_path, weights_only=False)
         for key, val in valid_data.items():
             assert key == val.idx
 
         test_data_path = dir / "811_test_data.pt"
-        test_data = torch.load(test_data_path)
+        test_data = torch.load(test_data_path, weights_only=False)
         for key, val in test_data.items():
             assert key == val.idx
 

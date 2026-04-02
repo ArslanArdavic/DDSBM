@@ -22,7 +22,7 @@ def SB_post_process(cfg, dataset_dir, perm_dir):
 
     perm_dict = {}
     for file in file_list:
-        perm_dict.update(torch.load(osp.join(perm_path, file)), weights_only=False)
+        perm_dict.update(torch.load(osp.join(perm_path, file), weights_only=False))
 
     perm_path = osp.join(perm_dir, "processed")
     file_list = os.listdir(perm_path)
@@ -140,7 +140,7 @@ def post_process(cfg, dataset_dir, perm_dir):
 
         perm_dict = {}
         for file in file_list:
-            perm_dict.update(torch.load(osp.join(perm_path, file)), weights_only=False)
+            perm_dict.update(torch.load(osp.join(perm_path, file), weights_only=False))
 
     else:
         file_list = os.listdir(cfg.graph_match.data_path)
@@ -148,7 +148,7 @@ def post_process(cfg, dataset_dir, perm_dir):
         file_list = [file for file in file_list if "generated_joint_train" in file]
         pyg_data_dict = {}
         for file in file_list:
-            pyg_data_dict.update(torch.load(osp.join(cfg.graph_match.data_path, file)), weights_only=False)
+            pyg_data_dict.update(torch.load(osp.join(cfg.graph_match.data_path, file), weights_only=False))
 
         # 2. Load perm data
         perm_path = osp.join(perm_dir, "processed")
@@ -157,7 +157,7 @@ def post_process(cfg, dataset_dir, perm_dir):
 
         perm_dict = {}
         for file in file_list:
-            perm_dict.update(torch.load(osp.join(perm_path, file)), weights_only=False)
+            perm_dict.update(torch.load(osp.join(perm_path, file), weights_only=False))
 
     print(f"Debug] len(pyg_dict): {len(pyg_data_dict)}")
     print(f"Debug] len(perm_dict): {len(perm_dict)}")

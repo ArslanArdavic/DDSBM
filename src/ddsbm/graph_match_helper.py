@@ -74,8 +74,8 @@ class GraphMatchModule(pl.LightningModule):
 
         if cfg.model.transition == "uniform":
             # NOTE: Number of classes (including X)
-            Xdim = len(torch.load(osp.join(dataset_dir, "node_types.pt")), weights_only=False)
-            Edim = len(torch.load(osp.join(dataset_dir, "edge_types.pt")), weights_only=False)
+            Xdim = len(torch.load(osp.join(dataset_dir, "node_types.pt"), weights_only=False))
+            Edim = len(torch.load(osp.join(dataset_dir, "edge_types.pt"), weights_only=False))
             self.transition_model = DiscreteUniformTransition(
                 x_classes=Xdim, e_classes=Edim, y_classes=1
             )

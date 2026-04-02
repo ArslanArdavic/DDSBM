@@ -156,9 +156,7 @@ class GraphMatcher(nn.Module):
         from pathlib import Path
 
         if (scratch_dir := Path("/scratch")).exists():
-            self.scratch_dir = (
-                scratch_dir / os.getenv("USER") / os.getenv("SLURM_JOBID")
-            )
+            self.scratch_dir = Path("/scratch/project_465002822") / "DDSBM" / os.getenv("SLURM_JOBID")
             self.scratch_dir.mkdir(parents=True, exist_ok=True)
 
     def forward(

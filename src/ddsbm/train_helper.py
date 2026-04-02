@@ -1,9 +1,13 @@
+import torch
+import functools
+_original_torch_load = torch.load
+torch.load = functools.partial(_original_torch_load, weights_only=False)
+
 import argparse
 import os
 import pathlib
 import warnings
 
-import torch
 import torch.distributed as dist
 from omegaconf import DictConfig, OmegaConf
 from pytorch_lightning import Trainer, seed_everything

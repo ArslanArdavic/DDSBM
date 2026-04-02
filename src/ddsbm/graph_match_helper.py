@@ -1,3 +1,8 @@
+import torch
+import functools
+_original_torch_load = torch.load
+torch.load = functools.partial(_original_torch_load, weights_only=False)
+
 import argparse
 import os
 import os.path as osp
@@ -8,7 +13,7 @@ from collections import defaultdict
 import pandas as pd
 import pygmtools as pygm
 import pytorch_lightning as pl
-import torch  # pytorch backend
+
 import torch.distributed as dist
 import torch.nn.functional as F
 from omegaconf import DictConfig, OmegaConf

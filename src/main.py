@@ -1,3 +1,8 @@
+import torch
+import functools
+_original_torch_load = torch.load
+torch.load = functools.partial(_original_torch_load, weights_only=False)
+
 import datetime
 import logging
 import os
@@ -13,7 +18,6 @@ import hydra
 from omegaconf import DictConfig, OmegaConf
 
 from ddsbm import CONFIG_PATH, EXECUTABLES, PROJECT_ROOT
-
 
 class DIRECTIONS(Enum):
     B = "backward"

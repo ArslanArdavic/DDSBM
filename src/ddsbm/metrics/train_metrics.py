@@ -4,7 +4,8 @@ import torch
 import torch.nn as nn
 import wandb
 from torch import Tensor
-from torchmetrics import MeanSquaredError, Metric, MetricCollection
+from torchmetrics import Metric, MetricCollection
+from torchmetrics.regression import MeanSquaredError
 
 from ddsbm.metrics.abstract_metrics import (
     NLL,

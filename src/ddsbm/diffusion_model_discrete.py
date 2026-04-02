@@ -466,7 +466,7 @@ class DiscreteDenoisingDiffusion(pl.LightningModule):
 
         # Log val nll with default Lightning logger, so it can be monitored by checkpoint callback
         val_nll = metrics[0]
-        self.log("val/epoch_NLL", val_nll, sync_dist=True)
+        self.log("val/epoch_NLL", val_nll, on_step=False, on_epoch=True, sync_dist=True)
 
         if val_nll < self.best_val_nll:
             self.best_val_nll = val_nll

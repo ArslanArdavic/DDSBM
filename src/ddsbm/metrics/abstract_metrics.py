@@ -1,7 +1,8 @@
 import torch
 from torch import Tensor
 from torch.nn import functional as F
-from torchmetrics import MeanSquaredError, Metric
+from torchmetrics import Metric
+from torchmetrics.regression import MeanSquaredError
 
 
 class TrainAbstractMetricsDiscrete(torch.nn.Module):

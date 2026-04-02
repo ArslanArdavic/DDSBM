@@ -3,7 +3,8 @@ import torch.nn as nn
 import wandb
 from rdkit import Chem
 from torch import Tensor
-from torchmetrics import MeanAbsoluteError, MeanSquaredError, Metric, MetricCollection
+from torchmetrics import Metric, MetricCollection
+from torchmetrics.regression import MeanAbsoluteError, MeanSquaredError
 
 ### packages for visualization
 from ddsbm.analysis.rdkit_functions import compute_molecular_metrics

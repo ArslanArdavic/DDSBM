@@ -122,7 +122,7 @@ def run_graph_match(cfg: DictConfig, logger: logging.Logger, test: bool = False)
     3. Test graph matching - with iteration and direction, end of training
     """
     _cfg = cfg.copy()
-    _cfg.graph_match.gpus = _cfg.general.gpus
+    _cfg.graph_match.gpus = 1
 
     # NOTE: Test
     if test:
@@ -146,7 +146,7 @@ def run_graph_match(cfg: DictConfig, logger: logging.Logger, test: bool = False)
         # -> should set sample_batch_size in train case
         _cfg.train.batch_size = _cfg.graph_match.batch_size
 
-    run_subprocess(_cfg, logger, "graph_match")
+    run_subprocess(_cfg, logger, "graph_match", restrict_to_single_gpu=True)
     return
 
 
@@ -159,7 +159,7 @@ def run_single_bridge(cfg: DictConfig, logger: logging.Logger, iteration: int):
     return
 
 
-def run_subprocess(cfg: DictConfig, logger: logging.Logger, run_type: str):
+def run_subprocess(cfg: DictConfig, logger: logging.Logger, run_type: str, restrict_to_single_gpu: bool = False):
     assert run_type in EXECUTABLES, f"Invalid run type {run_type}"
     with tempfile.NamedTemporaryFile(
         mode="w",
@@ -179,6 +179,11 @@ def run_subprocess(cfg: DictConfig, logger: logging.Logger, run_type: str):
         msg = f"Running {run_type}"
     logger.info(msg)
 
+    env = os.environ.copy()
+    if restrict_to_single_gpu:
+        env["ROCR_VISIBLE_DEVICES"] = "0"
+        env["HIP_VISIBLE_DEVICES"] = "0"
+
     cmd = [sys.executable, EXECUTABLES[run_type], config_path]
     try:
         result = subprocess.run(
@@ -186,6 +191,7 @@ def run_subprocess(cfg: DictConfig, logger: logging.Logger, run_type: str):
             stderr=subprocess.PIPE,
             text=True,
             check=False,
+            env=env,
         )
         if result.returncode != 0:
             if "statistics done" in result.stderr:

@@ -53,6 +53,7 @@ srun singularity run \
         general.test_only=$CKPT \
         general.gpus=8 \
         general.seed=$SEED \
+        general.name=SB_0.999_repro \
         general.chains_to_save=0 \
         general.final_model_samples_to_save=0 \
         general.final_model_chains_to_save=0

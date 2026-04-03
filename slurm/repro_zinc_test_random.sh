@@ -9,7 +9,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=56
 #SBATCH --mem=480G
-#SBATCH --time=02:00:00
+#SBATCH --time=48:00:00
 
 PRJ=project_465002822
 DDSBM_SRC=/project/$PRJ/DDSBM

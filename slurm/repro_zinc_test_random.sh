@@ -1,15 +1,15 @@
 #!/bin/bash
 #SBATCH --account=project_465002822
-#SBATCH --partition=standard-g
-#SBATCH --job-name=ddsbm_zinc_test_random
+#SBATCH --partition=small-g
+#SBATCH --job-name=gps_zinc_dev
 #SBATCH --output=/project/project_465002822/DDSBM/slurm/log/repro_zinc_test_random_%j.out
 #SBATCH --error=/project/project_465002822/DDSBM/slurm/log/repro_zinc_test_random_%j.err
 #SBATCH --nodes=1
-#SBATCH --gpus-per-node=8
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=56
-#SBATCH --mem=480G
-#SBATCH --time=48:00:00
+#SBATCH --gpus-per-node=1            # Number of GPUs per node (max of 8)
+#SBATCH --ntasks=1          
+#SBATCH --cpus-per-task=7           # Use --gpus-per-node*7 CPUs on LUMI-G nodes
+#SBATCH --mem-per-gpu=60G           
+#SBATCH --time=48:00:00               # time limit
 
 PRJ=project_465002822
 DDSBM_SRC=/project/$PRJ/DDSBM
@@ -51,9 +51,10 @@ srun singularity run \
     $SIF python $DDSBM_SRC/src/main.py \
         --config-name config_test \
         general.test_only=$CKPT \
-        general.gpus=8 \
+        general.gpus=1 \
         general.seed=$SEED \
-        general.name=SB_0.999_repro \
+        general.name=2026-04-02_SB_0.999_repro \
+        general.prepend_date_in_name=false \
         general.chains_to_save=0 \
         general.final_model_samples_to_save=0 \
         general.final_model_chains_to_save=0

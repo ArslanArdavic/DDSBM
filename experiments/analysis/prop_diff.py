@@ -13,7 +13,8 @@ from joblib import Parallel, delayed, parallel_backend
 from rdkit import Chem
 from rdkit.Chem import QED, Crippen, Descriptors
 
-sys.path.append(os.path.join(os.environ["CONDA_PREFIX"], "share", "RDKit", "Contrib"))
+sys.path.append("/opt/venv/lib/python3.12/site-packages/rdkit/Contrib")
+
 from SA_Score import sascorer
 
 from ddsbm import DATA_PATH, RESULTS_PATH

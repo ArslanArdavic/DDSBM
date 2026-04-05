@@ -32,7 +32,7 @@ ANALYSIS_DIR=$DDSBM_SRC/experiments/analysis
 TEST_RESULT_DIR=$OUTPUTS_DIR/test_${DIRECTION}_${IDX}_last
 GEN_PT=$TEST_RESULT_DIR/generated_joint_test_seed${SEED}_nfe100.pt
 
-ITERATIONS=$(seq 0 $IDX)   # 0 1 2 3 4 5
+ITERATIONS=5   #5
 
 # Expected output files — used for idempotency checks
 RESULT_CSV=$TEST_RESULT_DIR/result_${DIRECTION}_seed${SEED}.csv

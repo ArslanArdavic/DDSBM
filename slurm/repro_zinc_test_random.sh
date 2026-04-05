@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --account=project_465002822
 #SBATCH --partition=small-g
-#SBATCH --job-name=gps_zinc_dev
+#SBATCH --job-name=ddsbm_zinc_test_random
 #SBATCH --output=/project/project_465002822/DDSBM/slurm/log/repro_zinc_test_random_%j.out
 #SBATCH --error=/project/project_465002822/DDSBM/slurm/log/repro_zinc_test_random_%j.err
 #SBATCH --nodes=1

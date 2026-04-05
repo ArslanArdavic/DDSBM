@@ -316,10 +316,16 @@ def test(cfg: DictConfig):
     os.chdir(_cfg.graph_match.data_path)
 
     logger = get_logger(filename=str(Path(_cfg.general.name).resolve()))
-    run_subprocess(_cfg, logger, "test")
+    run_subprocess(_cfg, logger, "test", restrict_to_single_gpu=True)
     run_graph_match(_cfg, logger, test=True)
     return
 
 
 if __name__ == "__main__":
-    train()
+    if any("test_only" in arg for arg in sys.argv):
+        print("[main] test_only detected — entering test() branch")
+        test()
+    else:
+        print("[main] no test_only detected — entering train() branch")
+        train()
+

@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --account=project_465002822
-#SBATCH --partition=standard-g
+#SBATCH --partition=small-g
 #SBATCH --job-name=alt_ddsbm_zinc_train_random
 #SBATCH --output=/project/project_465002822/DDSBM/slurm/log/alt_repro_zinc_train_random_%j.out
 #SBATCH --error=/project/project_465002822/DDSBM/slurm/log/alt_repro_zinc_train_random_%j.err

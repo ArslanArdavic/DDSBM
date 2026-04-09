@@ -1,14 +1,14 @@
 #!/bin/bash
 #SBATCH --account=project_465002822
-#SBATCH --partition=small-g
+#SBATCH --partition=standard-g
 #SBATCH --job-name=alt_ddsbm_zinc_train_random
 #SBATCH --output=/project/project_465002822/DDSBM/slurm/log/alt_repro_zinc_train_random_%j.out
 #SBATCH --error=/project/project_465002822/DDSBM/slurm/log/alt_repro_zinc_train_random_%j.err
 #SBATCH --nodes=1
-#SBATCH --gpus-per-node=4            # Number of GPUs per node (max of 8)
-#SBATCH --ntasks=1          
-#SBATCH --cpus-per-task=28           # Use --gpus-per-node*7 CPUs on LUMI-G nodes
-#SBATCH --mem-per-gpu=60G           
+#SBATCH --gpus-per-node=8
+#SBATCH --ntasks=1        
+#SBATCH --cpus-per-task=56
+#SBATCH --mem=480G        
 #SBATCH --time=48:00:00               # time limit
 
 PRJ=project_465002822
@@ -53,7 +53,7 @@ srun singularity run \
     $SIF python $DDSBM_SRC/src/main.py \
         dataset.name=zinc \
         general.name=SB_0.999 \
-        general.gpus=4 \
+        general.gpus=8 \
         model.min_alpha=0.999 \
         train.n_epochs=300 \
         general.chains_to_save=0 \

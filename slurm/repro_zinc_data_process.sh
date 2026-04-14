@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --account=project_465002822
-#SBATCH --partition=small-g
+#SBATCH --partition=dev-g
 #SBATCH --job-name=ddsbm_zinc_test_random
 #SBATCH --output=/project/project_465002822/DDSBM/slurm/log/data_zinc_random_%j.out
 #SBATCH --error=/project/project_465002822/DDSBM/slurm/log/data_zinc_random_%j.err
@@ -9,7 +9,7 @@
 #SBATCH --ntasks=1          
 #SBATCH --cpus-per-task=7           # Use --gpus-per-node*7 CPUs on LUMI-G nodes
 #SBATCH --mem-per-gpu=60G           
-#SBATCH --time=48:00:00               # time limit
+#SBATCH --time=00:30:00               # time limit
 
 PRJ=project_465002822
 DDSBM_SRC=/project/$PRJ/DDSBM
